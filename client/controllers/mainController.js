@@ -18,7 +18,7 @@ exports.home = async (req, res, next) => {
         bannerImageUrl: remove,
       };
     }),
-    categories: categories,
+    categories,
   });
 };
 
@@ -34,6 +34,24 @@ exports.login = (req, res, next) => {
   res.render("login", { title: "Login - Sabka Bazaar" });
 };
 
-exports.products = (req, res, next) => {
-  res.render("products", { title: "Products - Sabka Bazaar" });
+exports.products = async (req, res, next) => {
+  const reqProducts = await axios.get("http://localhost:5000/products");
+  const reqCategories = await axios.get("http://localhost:5000/categories");
+  const products = reqProducts.data.map((pro) => {
+    return {
+      ...pro,
+      imageURL: pro.imageURL?.replace("/static/images", "/assets"),
+    };
+  });
+  const categories = reqCategories.data.map((cat) => {
+    return {
+      ...cat,
+      imageUrl: cat.imageUrl?.replace("/static/images", "/assets"),
+    };
+  });
+  res.render("products", {
+    title: "Products - Sabka Bazaar",
+    products,
+    categories,
+  });
 };
