@@ -1,0 +1,48 @@
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+     <title>{{title}}</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Dosis:400,600,700"
+    />
+  <link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css"
+  />
+   <link rel="stylesheet" type="text/css" href="./stylesheet/style.css" />
+    <script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
+ 
+
+  </head>
+  <body>
+    {{>header}}
+    {{{body}}}
+    {{>footer}}
+<script>
+  const swiper = new Swiper('.swiper', {
+  // Optional parameters
+  loop: true,
+  direction: 'horizontal',
+  slidesPerView: "auto",
+   centeredSlides: true,
+
+  // If we need pagination
+  pagination: {
+    el: '.swiper-pagination',
+  },
+
+  // Navigation arrows
+  navigation: {
+    nextEl: '.swiper-button-next',
+    prevEl: '.swiper-button-prev',
+  },
+});
+</script>
+  </body>
+</html>
