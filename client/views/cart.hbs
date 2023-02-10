@@ -1,1 +1,20 @@
-<h1>TESt Cart</h1>
+<section class="cart-container">
+  <div class="container">
+    <h1 style="margin-left:10px">My Cart (<span id="cart-count"></span>)</h1>
+    <div id="cart-list"></div>
+  </div>
+</section>
+<script>
+  function fetchProductInCart(){ const alreadyItems =
+  localStorage.getItem("cartValues") || "[]"; const alreadyItemsJson =
+  JSON.parse(alreadyItems); document.getElementById("cart-count").innerHTML =
+  alreadyItemsJson.length; const mapToShow = alreadyItemsJson.map((item)=>{
+  return ` <div class="row"> <div class="col-3 col-xs-3 "> <div
+  class="img-wrap"> <img src="${item.imageURL}" alt="${item.name}" /></div>
+  </div> <div class="col-5 col-xs-5 "> <h4>${item.name}</h4> <div class="row">
+  <div class="col-xs-4 col-1"> <button>-</button> </div> <div class="col-xs-4
+  col-1"> 1 </div> <div class="col-xs-4 col-1"> <button>+</button> </div> </div>
+  </div> <div class="col-3 col-xs-3">Rs. ${item.price} </div> </div> ` });
+  document.getElementById("cart-list").innerHTML = mapToShow }
+  fetchProductInCart()
+</script>

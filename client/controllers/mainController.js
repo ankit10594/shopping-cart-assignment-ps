@@ -23,7 +23,9 @@ exports.home = async (req, res, next) => {
 };
 
 exports.cart = (req, res, next) => {
-  res.render("cart", { title: "Cart - Sabka Bazaar" });
+  res.render("cart", {
+    title: `My Cart - Sabka Bazaar`,
+  });
 };
 
 exports.register = (req, res, next) => {
@@ -35,14 +37,28 @@ exports.login = (req, res, next) => {
 };
 
 exports.products = async (req, res, next) => {
+  const catKey = req.query.filter;
   const reqProducts = await axios.get("http://localhost:5000/products");
   const reqCategories = await axios.get("http://localhost:5000/categories");
-  const products = reqProducts.data.map((pro) => {
-    return {
-      ...pro,
-      imageURL: pro.imageURL?.replace("/static/images", "/assets"),
-    };
-  });
+  let pro = [];
+  if (catKey) {
+    pro = reqProducts.data
+      .map((pro) => {
+        return {
+          ...pro,
+          imageURL: pro.imageURL?.replace("/static/images", "/assets"),
+        };
+      })
+      .filter((pro) => pro.category === catKey);
+  } else {
+    pro = reqProducts.data.map((pro) => {
+      return {
+        ...pro,
+        imageURL: pro.imageURL?.replace("/static/images", "/assets"),
+      };
+    });
+  }
+
   const categories = reqCategories.data.map((cat) => {
     return {
       ...cat,
@@ -51,7 +67,8 @@ exports.products = async (req, res, next) => {
   });
   res.render("products", {
     title: "Products - Sabka Bazaar",
-    products,
+    products: pro,
     categories,
+    catKey,
   });
 };
